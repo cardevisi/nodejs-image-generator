@@ -4,8 +4,9 @@ const Path = require('path');
 const Hapi = require('hapi');
 const Hoek = require('hoek');
 const fs = require('fs');
+const ejs = require('ejs');
 
-console.log(__dirname);
+console.log('__dirname', __dirname);
 
 // Create a server with a host and port
 const server = new Hapi.Server();
@@ -19,8 +20,14 @@ server.route({
     method: 'GET',
     path:'/hello', 
     handler: function (request, reply) {
+        var files = [];
 		fs.readdir('./public/upload/', (err, data) => {
-			console.log(data);
+            data.forEach(function(item){
+
+            });
+			//console.log(data);
+
+
 		});
 		var data = {
 	      key: 'value',
@@ -31,11 +38,16 @@ server.route({
 	      }
 	    }
 
-    //reply(data)
+        console.log(files);
+
         //reply.view('index', { title: 'My home page' });
-       return reply.view('index', { title: 'My home page', data: data });
+        reply.view('index', { title: 'My home page', data: JSON.stringify({'files': files}) });
     }
 });
+
+const defaultContext = {
+    title: 'My personal site'
+};
 
 server.register(require('vision'), (err) => {
 
@@ -43,10 +55,11 @@ server.register(require('vision'), (err) => {
 
     server.views({
         engines: {
-            html: require('ejs')
+            html: ejs
         },
         relativeTo: __dirname,
-        path: './app/view'
+        path: './app/view',
+        context: defaultContext
         //layoutPath: './app/views/layout',
     	//helpersPath: './app/views/helpers'
     });

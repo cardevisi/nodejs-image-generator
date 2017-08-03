@@ -2,20 +2,15 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>{{title}}</title>
+	<title><%= title %></title>
 </head>
 <body>
 	<div class="container">
-
-        {{! Import the contents of header.html from partials}}
-        {{> header}}
-
-        {{! Every view gets inserted here }}
-        {{{content}}}
-
+        <p><%= data %></p>
+        <form  action="/upload">
+            <input type="text" name="name" >
+            <input type="file" name="name" accept="image/*">
+        </form>
     </div>
-
-    {{! Import the contents of footer.html from partials}}
-    {{> footer}}
 </body>
 </html>
