@@ -5,6 +5,8 @@ const Hapi = require('hapi');
 const Hoek = require('hoek');
 const ejs = require('ejs');
 const fs = require('fs');
+const util = require('util');
+const multiparty = require('multiparty');
 
 // Create a server with a host and port
 const server = new Hapi.Server();
@@ -38,6 +40,25 @@ server.route({
             reply.view('index', { title: 'My home page', data: JSON.stringify({'files': files}) });
         });
         
+    }
+});
+
+server.route({
+    method: 'GET',
+    path:'/upload', 
+    handler: function (request, reply) {
+            
+        let form = new multiparty.Form();
+        
+        //form.parse(request, function(err, fields, files) {
+            //if(err) return reply(err);
+           // else upload(files, reply);
+          //reply.writeHead(200, {'content-type': 'text/plain'});
+          //reply.write('received upload:\n\n');
+          //reply.end(util.inspect({fields: fields, files: files}));
+        //});
+    
+        //reply.view('upload', { title: 'upload' });
     }
 });
 
